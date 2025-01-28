@@ -1,0 +1,93 @@
+<div *ngIf="coffees$ | async as coffees" class="container mt-5">
+    <div *ngIf="coffees.length">
+      <h3 class="mb-3 text-center">Coffee List</h3>
+  
+      <div class="col-md-10">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Price</th>
+              <th scope="col">Region</th>
+              <th scope="col">Weight</th>
+              <th scope="col">Roast Level</th>
+              <th scope="col">Flavor Profiles</th>
+              <th scope="col">Grind Options</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td></td>
+                <td>
+                    <div>
+                        <label for="coffee-name">Name: </label>
+                        <input id="coffee-name" type="string" [(ngModel)]="coffeeToAdd.name" placeholder="Drip Coffee #1" />
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="coffee-desc">Description: </label>
+                        <input id="coffee-desc" type="string" [(ngModel)]="coffeeToAdd.description" placeholder="Coffee Description" />
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="coffee-price">Price: </label>
+                        <input id="coffee-price" type="number" [(ngModel)]="coffeeToAdd.price" placeholder=9.99 />
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="coffee-region">Region: </label>
+                        <input id="coffee-region" type="string" [(ngModel)]="coffeeToAdd.region" placeholder="Australia" />
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="coffee-weight">Weight: </label>
+                        <input id="coffee-weight" type="number" [(ngModel)]="coffeeToAdd.weight" placeholder=200 />
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="coffee-roast-level">Level: </label>
+                        <input id="coffee-roast-level" type="number" [(ngModel)]="coffeeToAdd.roast_level" min="1" max="5" placeholder=1 />
+                    </div>
+                </td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>
+                    <span class="edit btn btn-sm btn-outline-primary me-2" (click)="addCoffee(coffeeToAdd)">Add</span>
+                </td>
+
+            </tr>
+            <tr *ngFor="let coffee of coffees">
+                <td>{{ coffee.id }}</td>
+                <td>{{ coffee.name }} <img class="coffee-img" [src]="coffee.image_url"/></td>
+                <td>{{ coffee.description }}</td>
+                <td>
+                    <div>
+                        <label for="coffee-price">Price: </label>
+                        <input id="coffee-price" type="number" [(ngModel)]="coffee.price" />
+                    </div>
+                </td>
+                <td>{{ coffee.region }}</td>
+                <td>{{ coffee.weight }}</td>
+                <td>{{ coffee.roast_level }}</td>
+                <td>{{ coffee.flavor_profile | json }}</td>
+                <td>{{ coffee.grind_option | json }}</td>
+                <td>
+                    <!-- TODO PUT -->
+                    <span class="edit btn btn-sm btn-outline-primary me-2" (click)="editCoffee(coffee)">Edit</span>
+
+                    <span class="delete edit btn btn-sm btn-outline-danger"(click)="deleteCoffee(coffee.id)">Delete</span>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
