@@ -36,7 +36,7 @@ export class CoffeeApiService {
   getCoffee(id: number): Observable<Coffee> {
     return this.http
       .get<Coffee>(this.apiURL + '/' + id)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
   // POST
@@ -46,7 +46,7 @@ export class CoffeeApiService {
         this.apiURL,
         JSON.stringify(coffee)
       )
-      .pipe(map(res => res.added), retry(1), catchError(this.handleError));
+      .pipe(map(res => res.added), catchError(this.handleError));
   }
 
   // PUT
@@ -56,14 +56,14 @@ export class CoffeeApiService {
         this.apiURL + '/' + coffee.id,
         JSON.stringify(coffee)
       )
-      .pipe(map(res => res.update), retry(1), catchError(this.handleError));
+      .pipe(map(res => res.update), catchError(this.handleError));
   }
 
   // DELETE
   deleteCoffee(id: number) {
     return this.http
-      .delete<Coffee>(this.apiURL + '/' + id)
-      .pipe(retry(1), catchError(this.handleError));
+      .delete<Coffee>(this.apiURL + '/' + id, this.httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
   // Shared error handling
