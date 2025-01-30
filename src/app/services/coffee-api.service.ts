@@ -66,15 +66,17 @@ export class CoffeeApiService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  // Error handling
+  // Shared error handling
   private handleError(error: HttpErrorResponse) {
     let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
+    if (error.status === 0) {
       // Get client-side error
-      errorMessage = error.error.message;
+      errorMessage = error.error;
+      console.error('[CoffeeApiService] => Client-side HTTP error occured: ', errorMessage, error);
     } else {
       // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.error}`;
+      console.error('[CoffeeApiService] => Server-side HTTP error occured: ', errorMessage, error);
     }
     return throwError(() => {
       return errorMessage;
